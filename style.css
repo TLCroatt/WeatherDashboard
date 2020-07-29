@@ -1,6 +1,11 @@
 .jumbotron {
     text-align: center;
-    background-color: aqua;
+    background-color: rgb(52, 114, 165);
+    height: 90px;
+    font-size: 32px;
+    font-weight: bold;
+    color: white; 
+    padding-top: 20px;
     
 }
 
