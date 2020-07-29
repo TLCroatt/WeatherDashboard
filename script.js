@@ -14,14 +14,21 @@ $(document).ready(function() {
             method: "GET"
         }).then(function(response) {
             cityId = result.id;
-
+            
+                //second ajax call using response from first to generate weather data
                 $.ajax({url: "api.openweathermap.org/data/2.5/weather?q={cityId}&appid={apiKey}&units=imperial",
                 success: function(result) {
-                    $("#current").html("");
-                    $("#current").append("<div class='heading'><h1>${result.city.name} (${getDate(0)})</h1>");
-                    $("#current").append("<p class='temperature'>Tempurature: ${result.list[0].main.temp} °F</p>");
-                    $("#current").append("<p class='humidity'>Humidity: ${result.list[0].man.humidity} %</p>");
-                    $("#current").append("<p class='windSpeed'>Wind Speed: ${mph(result.list[0].wind.speed)} MPH</p>");
+                    var city = $("<h1>").text($(result.city.name) + $(getDate(0)));
+                    $("#current").append(city);
+
+                    var temperature = $("<p>").text("Tempurature: " + $(result.list[0].main.temp) + "°F");
+                    $("#current").append(temperature);
+
+                    var humidity = $("<p>").text("Humidity: " + $(result.list[0].main.humidity) + "%");
+                    $("#current").append(humidity);
+
+                    var windSpeed = $("<p>").text("Wind Speed: " + $(mph(result.list[0].wind.speed)) + "MPH")
+                    $("#current").append(windSpeed);
                 }
 
                 })
