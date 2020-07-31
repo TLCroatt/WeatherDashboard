@@ -22,15 +22,13 @@ $(document).ready(function () {
       cities = JSON.parse(localStorage.getItem("citySearch"));
     }
 
-    //function to take in the city as a parameter
+    //function to search weather from input
     const searchWeather = () => {
       console.log("running");
       $("#cityDisplay .card-body").empty();
       //add the city to the cities array
       cities.push(city);
 
-      //update the data object with the city
-      //data.name = city;
       var citySearches = $("#citySearches ul");
 
       citySearches.empty();
@@ -86,14 +84,15 @@ $(document).ready(function () {
             response.coord.lat +
             "&lon=" +
             response.coord.lon,
-          success: function (result) {
+          method: "GET",  
+        }).then(function (result) {
               console.log(result);
             var UV = $("<p>")
               .addClass("card-body")
               .text("UV Index: " + result.value);
             $("#cityDisplay").append(UV);
-          },
-        });
+          });
+        
 
         //third ajax call for 5 day forecast
         $.ajax({

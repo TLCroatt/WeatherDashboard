@@ -22,37 +22,34 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-sm-4" id="cities">
+            <div class="col-md-4" id="cities">
                 <form class="form-inline">
                     <div class="form-group mx-sm-3 mb-2">
                         <input type="citySearch" class="form-control" id="city" placeholder="Search for a City">
                     </div>
                     <button class="btn btn-primary mb-2 fas fa-search" id="submit"></i></button>
                 </form>
-                <div class="priorSearches"></div>
+                <ul class="list-group" id="citySearches">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
             </div>    
-        </div>
-
-        <ul class="col-sm-4" id="citySearches">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-          </ul>
-
         
-        <div class="col-md-9" id="cityDisplay">
+            <div class="col-md-8" id="cityDisplay">
                 
-            <div class="cityName"></div>
-            <div class="temperature"></div>
-            <div class="humidity"></div>
-            <div class="windSpeed"></div>
-            <div class="UVIndex"></div>
+                <div class="cityName"></div>
+                <div class="temperature"></div>
+                <div class="humidity"></div>
+                <div class="windSpeed"></div>
+                <div class="UVIndex"></div>
                 
-        </div>
+            </div>
+        </div>    
         
-        
+            
         
         <div class="row" id="forecast">
             <div class="col-8">
