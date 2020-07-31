@@ -1,76 +1,115 @@
-$(document).ready(function() {
+$(document).ready(function () {
+  //event listener for search button
+  $("#submit").click(function () {
+    event.preventDefault();
 
-    //event listener for search button
-    $("#submit").click(function() {
-        event.preventDefault();
+    let city = $("#city").val();
+    console.log("city", city);
 
-        searchWeather();
+    //clear input field after search
+    $("#city").val("");
 
-        let city = $("#city").val();
-        console.log("city", city);
+    //event listener for searched cities list to run searchWeather function
+    $(document).on("click", ".citySearches li", function () {
+      var selectedCity = $(this).text();
+      console.log("selectedCity", selectedCity);
+      searchWeather(selectedCity);
+    });
 
-        //clear input field after search
-        $("#city").val("");
+    //array of searched cities, check local storage for previous searches
+    let cities = [];
+    if (localStorage.getItem("citySearch")) {
+      cities = JSON.parse(localStorage.getItem("citySearch"));
+    }
 
-        //array of searched cities
-        let cities = [];
+    //function to take in the city as a parameter
+    const searchWeather = () => {
+      console.log("running");
+      $("#cityDisplay .card-body").empty();
+      //add the city to the cities array
+      cities.push(city);
 
-        //function to take in the city as a parameter
-        const searchWeather = (city) => {
-            $("#cityDisplay .card-body").empty()
-            //add te city to the cities array
-            cities.push(city);
-            
-            //update the data object with the city
-            data.name = city;
-            var citySearches = $("#citySearches ul");
-            
-            citySearches.empty();
+      //update the data object with the city
+      //data.name = city;
+      var citySearches = $("#citySearches ul");
 
-            //for loop to add searched cities to the list display
-            for (var i = 0; i < cities.length; i++) {
-                var li = $("<li>").addClass("list-group-item").text(cities[i]);
-                citySearches.append(li);
-            };
+      citySearches.empty();
 
-            let apiKey = "e5d47731dc26eefda896c92eb148db5f"
-            let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=e5d47731dc26eefda896c92eb148db5f"
+      //for loop to add searched cities to the list display
+      for (var i = 0; i < cities.length; i++) {
+        var li = $("<li>").addClass("list-group-item").text(cities[i]);
+        citySearches.append(li);
+      }
 
-            //ajax call to search for city
-            $.ajax({
-                url: queryURL,
-                method: "GET"
-            }).then(function(response) {
-                //clear card body for each new search
-                
-                cityId = result.id;
-            
-                    //second ajax call using response from first to generate weather data
-                    $.ajax({url: "api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=imperial",
-                    success: function(result) {
+      let apiKey = "e5d47731dc26eefda896c92eb148db5f";
+      let queryURL =
+        "https://api.openweathermap.org/data/2.5/weather?q=" +
+        city +
+        "&appid=" +
+        apiKey +
+        "&units=imperial";
 
-                        //dynamically create dom elements for results - change to .addClass
-                        var city = $("<h3>").text($(result.city.name) + $(getDate(0)));
-                        $("#cityDisplay").append(city); //addClass "card-title"
+      //ajax call to search for city to generate weather data
+      $.ajax({
+        url: queryURL,
+        method: "GET",
+      }).then(function (response) {
+        //clear card body for each new search
 
-                        var temperature = $("<p>").text("Tempurature: " + $(result.list[0].main.temp) + "°F");
-                        $("#cityDisply").append(temperature); //addClass "card-body"
+        //cityId = result.id;
+        console.log(response);
+        //dynamically create dom elements for results - change to .addClass
+       console.log(city);
+        var cityTitle = $("<h3>").addClass("card-title").text(city);
 
-                        var humidity = $("<p>").text("Humidity: " + $(result.list[0].main.humidity) + "%");
-                        $("#cityDisplay").append(humidity);
+        var temperature = $("<p>")
+          .addClass("card-body")
+          .text("Tempurature: " + response.main.temp + "°F");
 
-                        var windSpeed = $("<p>").text("Wind Speed: " + $(mph(result.list[0].wind.speed)) + "MPH")
-                        $("#cityDisplay").append(windSpeed);
+        var humidity = $("<p>")
+          .addClass("card-body")
+          .text("Humidity: " + response.main.humidity + "%");
 
-                        //append everything
-                        $("#cityDisplay").append(city, temperature, humidity, windSpeed);
-                    }
+        var windSpeed = $("<p>")
+          .addClass("card-body")
+          .text("Wind Speed: " + response.wind.speed + "MPH");
 
-                    })
+        //append everything
+        $("#cityDisplay").append(cityTitle, temperature, humidity, windSpeed);
 
-            })
-        }    
-    })
+        //second ajax call using objects that return from second ajax call for longitude and latitude to get UV index
+        $.ajax({
+          url:
+            "http://api.openweathermap.org/data/2.5/uvi?appid=" +
+            apiKey +
+            "&lat=" +
+            response.coord.lat +
+            "&lon=" +
+            response.coord.lon,
+          success: function (result) {
+              console.log(result);
+            var UV = $("<p>")
+              .addClass("card-body")
+              .text("UV Index: " + result.value);
+            $("#cityDisplay").append(UV);
+          },
+        });
 
+        //third ajax call for 5 day forecast
+        $.ajax({
+            url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey,
+            method: "GET"
 
-})
+        }).then(function(result) {
+            console.log(result)
+        })
+      });
+    };
+
+    searchWeather();
+    //check local storage for searched cities. if new search !==, save to local storage
+    //retreive 5 day forecast and append to forecast div
+    //add icon to city that represents current weather conditions
+    //add color to UV Index to show conditions
+  });
+});
