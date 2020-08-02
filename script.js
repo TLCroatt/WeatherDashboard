@@ -114,14 +114,14 @@ $(document).ready(function () {
                     var DayOneTemp = $("<p>")
                     .addClass("card-body")
                     .text("Tempurature: " + result.list[i].main.temp + "°F");
-                    $(".Day1").append(DayOneTemp)
+                    
 
                     var DayOneHumidity = $("<p>")
                     .addClass("card-body")
                     .text("Humidity: " + result.list[i].main.humidity + "%");
                     console.log(DayOneTemp, DayOneHumidity)
 
-                    //$("#forecast").append(DayOneTemp, DayOneHumidity)
+                    $(".forecast-titles").append(DayOneTemp, DayOneHumidity)
           
                 }
             }
