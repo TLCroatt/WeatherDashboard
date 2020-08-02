@@ -30,11 +30,7 @@
                     <button class="btn btn-primary mb-2 fas fa-search" id="submit"></i></button>
                 </form>
                 <ul class="list-group" id="citySearches">
-                    <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
+                    
                 </ul>
             </div>    
         
@@ -51,31 +47,50 @@
                     </div>
                 </div>
 
-            <div class="row" id="forecast">
-                <h4 id="forecast-heading">5 Day Forecast</h4>
-                <div class="row" id="forecast-titles">
-                    <div class="col-md-3">
-                        <div class="card">
-
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card">
+                <div class="row" id="forecast-card">
+                
+                    <div class="col">
+                        <div class="card forecast" id="Day1">
+                            <h6 id="date1"></h6>
+                            <p id="d1temp"></p>
+                            <p id="d1humidity"></p>
+                            <img id="d1icon" src="">
                             
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card">
+                    <div class="col">
+                        <div class="card forecast">
+                            <h6 id="date2"></h6>
+                            <p id="d2temp"></p>
+                            <p id="d2humidity"></p>
+                            <img id="d2icon" src="">
+                
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card forecast">
+                            <h6 id="date3"></h6>
+                            <p id="d3temp"></p>
+                            <p id="d3humidity"></p>
+                            <img id="d3icon" src="">
                             
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card">
+                    <div class="col">
+                        <div class="card forecast">
+                            <h6 id="date4"></h6>
+                            <p id="d4temp"></p>
+                            <p id="d4humidity"></p>
+                            <img id="d4icon" src="">
                             
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card">
+                    <div class="col">
+                        <div class="card forecast">
+                            <h6 id="date5"></h6>
+                            <p id="d5temp"></p>
+                            <p id="d5humidity"></p>
+                            <img id="d5icon" src="">
                             
                         </div>
                     </div>
@@ -88,15 +103,10 @@
         </div>    
         
             
-        
-          
-
             
     </div>
 
-    
-    
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
 </body>
 </html>

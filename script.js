@@ -2,6 +2,12 @@ $(document).ready(function () {
   //event listener for search button
   $("#submit").click(function () {
     event.preventDefault();
+ 
+    var currentDate = moment().date(Number).add(5, "d").format("MM/DD/YY");
+    console.log(currentDate);
+
+    //$("#cityForecast").hide()
+    //$("#forecast-card").hide()
 
     let city = $("#city").val();
     console.log("city", city);
@@ -16,27 +22,27 @@ $(document).ready(function () {
       searchWeather(selectedCity);
     });
 
-    //array of searched cities, check local storage for previous searches
-    let cities = [];
-    if (localStorage.getItem("citySearch")) {
-      cities = JSON.parse(localStorage.getItem("citySearch"));
-    }
+    let cities = []
 
     //function to search weather from input
     const searchWeather = () => {
       console.log("running");
-      $("#cityDisplay .card-body").empty();
+      $("#cityForecast .card-body").empty();
+
       //add the city to the cities array
       cities.push(city);
+      localStorage.setItem("Cities", JSON.stringify(cities));
 
-      var citySearches = $("#citySearches ul");
+      //var citySearches = $("#citySearches ul");
 
-      citySearches.empty();
+      $("#citySearches").empty();
+
+      var data = JSON.parse(localStorage.getItem("Cities"))
 
       //for loop to add searched cities to the list display
       for (var i = 0; i < cities.length; i++) {
         var li = $("<li>").addClass("list-group-item").text(cities[i]);
-        citySearches.append(li);
+        $("#citySearches").append(li);
       }
 
       let apiKey = "e5d47731dc26eefda896c92eb148db5f";
@@ -58,9 +64,8 @@ $(document).ready(function () {
         console.log(response);
         //dynamically create dom elements for results - change to .addClass
         console.log(city);
-        var cityTitle = $("<h3>").addClass("card-title").text(city); //add date
-        //var icon = $("<img>").attr("src"= response.weather[0].icon, url: 'http://openweathermap.org/img/wn/' + src +'@2x.png>') 
-        //$("<img src='http://openweathermap.org/img/wn/' + + '@2x.png>")
+        var cityTitle = $("<h3>").addClass("card-title").text(city + " " + currentDate); //add date
+        
         var temperature = $("<p>")
           .addClass("card-body")
           .text("Tempurature: " + response.main.temp + "°F");
@@ -73,8 +78,14 @@ $(document).ready(function () {
           .addClass("card-body")
           .text("Wind Speed: " + response.wind.speed + "MPH");
 
+        var iconImg = response.weather[0].icon;
+        var weatherIcon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + iconImg + "@2x.png");
+
         //append everything
-        $("#cityDisplay").append(cityTitle, temperature, humidity, windSpeed);
+        $("#cityDisplay").append(cityTitle, weatherIcon, temperature, humidity, windSpeed);
+
+        $("#cityDisplay").slideDown("fast")
+
 
         //second ajax call using objects that return from second ajax call for longitude and latitude to get UV index
         $.ajax({
@@ -103,29 +114,66 @@ $(document).ready(function () {
         }).then(function(result) {
             console.log(result)
 
+            $("#forecast").empty()
+
+            //for loop to pull out all times matching 15:00:00
             for (var i = 0; i < result.list.length; i ++) {
                 
                 var date = new Date(result.list[i].dt_txt)
                 var hours = date.getHours()
                 
+                
                 if (hours === 15) {
                     console.log(result.list[i].dt_txt)
+                    console.log(result.list[i].main.temp)
+                    //day 1 forecast
+                    $("#date1").text(moment().date(Number).add(1, "d").format("MM/DD/YY"));
+                    $("#d1temp").addClass("card-body").text("Temperature: " + result.list[0].main.temp + " °F")
+                    $("#d1humidity").addClass("card-body").text("Humidity: " + result.list[0].main.humidity + "%")
+                    $("#d1icon").attr("src",  "http://openweathermap.org/img/wn/" + result.list[0].weather[0].icon + "@2x.png")
+                    //day 2 forecast
+                    $("#date2").text(moment().date(Number).add(2, "d").format("MM/DD/YY"));
+                    $("#d2temp").addClass("card-body").text("Temperature: " + result.list[1].main.temp + " °F")
+                    $("#d2humidity").addClass("card-body").text("Humidity: " + result.list[1].main.humidity + "%")
+                    $("#d2icon").attr("src",  "http://openweathermap.org/img/wn/" + result.list[1].weather[0].icon + "@2x.png")
+                    //day 3 forecast
+                    $("#date3").text(moment().date(Number).add(3, "d").format("MM/DD/YY"));
+                    $("#d3temp").addClass("card-body").text("Temperature: " + result.list[2].main.temp + " °F")
+                    $("#d3humidity").addClass("card-body").text("Humidity: " + result.list[2].main.humidity + "%")
+                    $("#d3icon").attr("src",  "http://openweathermap.org/img/wn/" + result.list[2].weather[0].icon + "@2x.png")
+                    //day 4 forecast
+                    $("#date4").text(moment().date(Number).add(4, "d").format("MM/DD/YY"));
+                    $("#d4temp").addClass("card-body").text("Temperature: " + result.list[3].main.temp + " °F")
+                    $("#d4humidity").addClass("card-body").text("Humidity: " + result.list[3].main.humidity + "%")
+                    $("#d4icon").attr("src",  "http://openweathermap.org/img/wn/" + result.list[3].weather[0].icon + "@2x.png")
+                    //day 5 forecast
+                    $("#date5").text(moment().date(Number).add(5, "d").format("MM/DD/YY"));
+                    $("#d5temp").addClass("card-body").text("Temperature: " + result.list[4].main.temp + " °F")
+                    $("#d5humidity").addClass("card-body").text("Humidity: " + result.list[4].main.humidity + "%")
+                    $("#d5icon").attr("src",  "http://openweathermap.org/img/wn/" + result.list[4].weather[0].icon + "@2x.png")
 
-                    var DayOneTemp = $("<p>")
-                    .addClass("card-body")
-                    .text("Tempurature: " + result.list[i].main.temp + "°F");
+
+                    //var FiveDayTemp = $("<p>")
+                    //.addClass("card-body")
+                    //.text("Tempurature: " + result.list[i].main.temp + "°F");
                     
 
-                    var DayOneHumidity = $("<p>")
-                    .addClass("card-body")
-                    .text("Humidity: " + result.list[i].main.humidity + "%");
-                    console.log(DayOneTemp, DayOneHumidity)
+                    //var FiveDayHumidity = $("<p>")
+                    //.addClass("card-body")
+                    //.text("Humidity: " + result.list[i].main.humidity + "%");
+                    //console.log(FiveDayTemp, FiveDayHumidity)
 
-                    $(".forecast-titles").append(DayOneTemp, DayOneHumidity)
-          
+                    
+    
+                    //$("#forecast-card").append(FiveDayHumidity)
+                    
                 }
             }
-
+            //let cards = document.getElementsByClassName("forecast")
+            //for (var i = 0; i < cards.length; i ++) {
+                
+                //cards[i].textContent = 5
+            //}
         })
       });
     };
