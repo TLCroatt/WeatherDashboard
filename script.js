@@ -99,10 +99,17 @@ $(document).ready(function () {
           method: "GET",  
         }).then(function (result) {
               console.log(result);
+            var UVIndex = parseInt(result.value)
+                console.log(UVIndex)
             var UV = $("<p>")
               .addClass("card-body")
               .text("UV Index: " + result.value);
             $("#cityDisplay").append(UV);
+            if (UVIndex <= 2){
+                UV.addClass("low");
+            }else if (UVIndex >2 && UVIndex <5){
+                UV.addClass("moderate");
+            }else{UV.addClass("severe");}
           });
         
 
@@ -112,7 +119,7 @@ $(document).ready(function () {
             method: "GET"
 
         }).then(function(result) {
-            console.log(result)
+            //console.log(result)
 
             $("#forecast").empty()
 
