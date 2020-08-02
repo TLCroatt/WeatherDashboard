@@ -53,13 +53,14 @@ $(document).ready(function () {
         method: "GET",
       }).then(function (response) {
         //clear card body for each new search
+        $("#card-body").empty()
 
-        //cityId = result.id;
         console.log(response);
         //dynamically create dom elements for results - change to .addClass
-       console.log(city);
-        var cityTitle = $("<h3>").addClass("card-title").text(city);
-
+        console.log(city);
+        var cityTitle = $("<h3>").addClass("card-title").text(city); //add date
+        //var icon = $("<img>").attr("src"= response.weather[0].icon, url: 'http://openweathermap.org/img/wn/' + src +'@2x.png>') 
+        //$("<img src='http://openweathermap.org/img/wn/' + + '@2x.png>")
         var temperature = $("<p>")
           .addClass("card-body")
           .text("Tempurature: " + response.main.temp + "°F");
@@ -96,11 +97,35 @@ $(document).ready(function () {
 
         //third ajax call for 5 day forecast
         $.ajax({
-            url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey,
+            url: "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey +  "&units=imperial",
             method: "GET"
 
         }).then(function(result) {
             console.log(result)
+
+            for (var i = 0; i < result.list.length; i ++) {
+                
+                var date = new Date(result.list[i].dt_txt)
+                var hours = date.getHours()
+                
+                if (hours === 15) {
+                    console.log(result.list[i].dt_txt)
+
+                    var DayOneTemp = $("<p>")
+                    .addClass("card-body")
+                    .text("Tempurature: " + result.list[i].main.temp + "°F");
+                    $(".Day1").append(DayOneTemp)
+
+                    var DayOneHumidity = $("<p>")
+                    .addClass("card-body")
+                    .text("Humidity: " + result.list[i].main.humidity + "%");
+                    console.log(DayOneTemp, DayOneHumidity)
+
+                    //$("#forecast").append(DayOneTemp, DayOneHumidity)
+          
+                }
+            }
+
         })
       });
     };

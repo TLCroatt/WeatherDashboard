@@ -19,10 +19,10 @@
     </div> 
 
 
-    <div class="container">
+    <div class="container-fluid">
 
-        <div class="row">
-            <div class="col-md-4" id="cities">
+        <div class="row-mt-3">
+            <div class="col-md-4" id="search">
                 <form class="form-inline">
                     <div class="form-group mx-sm-3 mb-2">
                         <input type="citySearch" class="form-control" id="city" placeholder="Search for a City">
@@ -38,40 +38,37 @@
                 </ul>
             </div>    
         
-            <div class="col-md-8" id="cityDisplay">
+            <div class="container" id="cityForecast">
+                <div class="card bg-light">
+                    <div class="col-md-7" id="cityDisplay">
                 
-                <div class="cityName"></div>
-                <div class="temperature"></div>
-                <div class="humidity"></div>
-                <div class="windSpeed"></div>
-                <div class="UVIndex"></div>
+                        <div class="cityName"></div>
+                        <div class="temperature"></div>
+                        <div class="humidity"></div>
+                        <div class="windSpeed"></div>
+                        <div class="UVIndex"></div>
                 
+                    </div>
+                </div>
+
+            <div class="row" id="forecast">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">Card title</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="card-link">Card link</a>
+                    </div>
+                </div>
+                
+    
+            </div>  
             </div>
+            
         </div>    
         
             
         
-        <div class="row" id="forecast">
-            <div class="col-8">
-                <div class="row">
-                    <div class="col-sm 1.5" id="Day1">
-                        <!-- <img src="..." class="rounded" alt="..."> -->
-                    </div>
-                    <div class="col-sm 1.5" id="Day2">
-                        <!-- <img src="..." class="rounded" alt="..."> -->
-                    </div>
-                    <div class="col-sm 1.5" id="Day3">
-                        <!-- <img src="..." class="rounded" alt="..."> -->
-                    </div>
-                    <div class="col-sm 1.5" id="Day4">
-                        <!-- <img src="..." class="rounded" alt="..."> -->
-                    </div>
-                    <div class="col-sm 1.5" id="Day5">
-                        <!-- <img src="..." class="rounded" alt="..."> -->
-                    </div>
-                    </div>
-            </div>
-        </div>    
+          
 
             
     </div>
