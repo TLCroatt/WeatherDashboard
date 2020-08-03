@@ -4,8 +4,8 @@ $(document).ready(function () {
     event.preventDefault();
 
     
-    //$("#cityForecast").hide()
-    //$("#forecast-card").hide()
+    $("#cityForecast").hide()
+    $("#forecast-card").hide()
 
     let city = $("#city").val();
     console.log("city", city);
@@ -13,7 +13,6 @@ $(document).ready(function () {
     //clear input field after search
     $("#city").val("");
 
-    //put local storage here
     //check local storage for an array
     var searchHistory = localStorage.getItem("searchHistory")
     console.log(searchHistory)
@@ -43,23 +42,15 @@ $(document).ready(function () {
   });
 
   
-
   //function to search weather from inputJSON
   function searchWeather(city) {
     console.log("running");
     $("#cityForecast .card-body").empty();
 
-    //add the city to the cities array
-    
-
-
-    //var citySearches = $("#citySearches ul");
-
     $("#citySearches").empty();
 
-    
-
-    //for loop to add searched cities to the list display
+    $("#cityForecast").show()
+    $("#forecast-card").show()
     
 
     let apiKey = "e5d47731dc26eefda896c92eb148db5f";
@@ -76,10 +67,11 @@ $(document).ready(function () {
       method: "GET",
     }).then(function (response) {
       //clear card body for each new search
-      $("#card-body").empty();
+      $("#cityDisplay").empty();
 
       console.log(response);
-      //dynamically create dom elements for results - change to .addClass
+
+      //dynamically create dom elements for results
       console.log(city);
 
       var currentDate = moment().date(Number).add(5, "d").format("MM/DD/YY");
@@ -87,7 +79,7 @@ $(document).ready(function () {
 
       var cityTitle = $("<h3>")
         .addClass("card-title")
-        .text(city + " " + currentDate); //add date
+        .text(city + " " + currentDate);
 
       var temperature = $("<p>")
         .addClass("card-body")
@@ -119,7 +111,7 @@ $(document).ready(function () {
       $("#cityDisplay").slideDown("fast");
       console.log("its working")
 
-      //second ajax call using objects that return from second ajax call for longitude and latitude to get UV index
+      //second ajax call using objects that return from first ajax call for longitude and latitude to get UV index
       $.ajax({
         url:
           "http://api.openweathermap.org/data/2.5/uvi?appid=" +
@@ -135,14 +127,14 @@ $(document).ready(function () {
         console.log(UVIndex);
         var UV = $("<p>")
           .addClass("card-body")
-          .text("UV Index: " + result.value);
+          .text("UV Index: "+ result.value);
         $("#cityDisplay").append(UV);
         if (UVIndex <= 2) {
           UV.addClass("low");
         } else if (UVIndex > 2 && UVIndex < 5) {
           UV.addClass("moderate");
         } else {
-          UV.addClass("severe");
+          UV.addClass("high");
         }
       });
 
@@ -156,7 +148,6 @@ $(document).ready(function () {
           "&units=imperial",
         method: "GET",
       }).then(function (result) {
-        //console.log(result)
 
         $("#forecast").empty();
 
@@ -249,29 +240,12 @@ $(document).ready(function () {
                 "@2x.png"
             );
 
-            //var FiveDayTemp = $("<p>")
-            //.addClass("card-body")
-            //.text("Tempurature: " + result.list[i].main.temp + "°F");
-
-            //var FiveDayHumidity = $("<p>")
-            //.addClass("card-body")
-            //.text("Humidity: " + result.list[i].main.humidity + "%");
-            //console.log(FiveDayTemp, FiveDayHumidity)
-
-            //$("#forecast-card").append(FiveDayHumidity)
+            
           }
         }
-        //let cards = document.getElementsByClassName("forecast")
-        //for (var i = 0; i < cards.length; i ++) {
-
-        //cards[i].textContent = 5
-        //}
+        
       });
     });
   }
 
-  //check local storage for searched cities. if new search !==, save to local storage
-  //retreive 5 day forecast and append to forecast div
-  //add icon to city that represents current weather conditions
-  //add color to UV Index to show conditions
 });
