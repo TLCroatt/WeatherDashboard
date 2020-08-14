@@ -30,4 +30,6 @@ THEN I am presented with the last searched city forecast
 
 The following image demonstrates the application functionality:
 
+<img width="1444" alt="WeatherDash" src="https://user-images.githubusercontent.com/66500773/90269348-b88ab900-de15-11ea-8213-fb64892358a2.png">
+
 deployed application: https://tlcroatt.github.io/WeatherDashboard/
