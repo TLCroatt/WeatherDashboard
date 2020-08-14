@@ -8,7 +8,7 @@ Pulls up to date weather info from Open Wather API for city searches, giving cur
 * [Contributing](#contributing)
 * [Features](#features)
 * [Status](#status)
-* [Licensing](#licensing)
+* [License](#license)
 
 ## General info
 Search by city for current weather conditions and a five day forecast and store previous searches.
